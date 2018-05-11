@@ -1,6 +1,6 @@
-#include"dataset"
-#include<stdio.h>
-#include<stdlib.h>
+#include "dataset"
+#include <stdio.h>
+#include <stdlib.h>
 
 /*
 データを表す構造体のベクトルのメモリ確保
@@ -47,6 +47,39 @@ DataSet* extract_cluster(DataSet* dataset, int8_t cluster_number){
     return extracted
 }
 
+/*
+当該するクラスタの中心地の座標を算出する
+dataset 抽出する元のデータ数
+cluster_number: クラスタの番号
+*/
+double* calculate_center_of_cluster(DataSet* dataset, int8_t cluster_number){
+    DataSet* cluster_dataset = extract_cluster(dataset, cluster_number);
+    int32_t cluster_dataset_num = sizeof(cluster_dataset)
+    int8_t dimention = malloc_usable_size(dataset[0].position);
+    //中心となるベクトルの初期化
+    double* center_pos = (*double)malloc(dimention*sizeof(double));
+    for(int index = 0; imdex < diension; index++){
+        center_pos[index] = 0;
+    }
+
+    //クラスタが存在しない場合はそのまま返す
+    if(cluster_dataset_num < 1){
+        return center_pos;
+    }
+
+    //それぞれのデータの値の総和を出す
+    for(int index_dataset = 0; index_dataset < cluster_dataset_num; index_dataset++){
+        for(int index_vector = 0; index_vector < dimention; index_vector++){
+            center_pos[index_vector] = center_pos[index_vector] + cluster_dataset[index_dataset]->position[index_vector];
+        }
+    }
+
+    //データの平均値を求め、中心値を出す
+    for(int index_dataset = 0; index_dataset < cluster_dataset_num; index_dataset++){
+        center_pos[index_dataset] = center_pos[index_dataset]/(double)cluster_dataset_num;
+    }
+    return center_pos;
+}
 
 /*
 データ内のベクトルのメモリを開放する

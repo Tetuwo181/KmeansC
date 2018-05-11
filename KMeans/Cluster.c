@@ -1,6 +1,6 @@
 #include "Cluster"
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 /*
 クラスタを表す構造体のベクトルのメモリ確保

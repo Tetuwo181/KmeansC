@@ -9,4 +9,5 @@ typedef struct DiffOldAndNew{
     double* old_pos;
     double* new_pos;
     double difference;
+    int8_t cluster_number;
 }DiffOldAndNew;
